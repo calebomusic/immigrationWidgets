@@ -1,0 +1,47 @@
+.grid line {
+  stroke: #ccc;
+  stroke-dasharray: 1 4;
+  stroke-linecap: round;
+}
+
+.axisX {
+  shape-rendering: crispEdges;
+  /*fill: none;*/
+}
+
+.domain {
+  display: none
+}
+
+.beforeAnswerDisplay {
+  display: block;
+  margin: 2px;
+  border: 1px;
+  border-radius: 1px solid;
+  border-color: #FF4136;
+}
+
+.hidden {
+  display: none;
+}
+
+.guessLine {
+  stroke: #FF4136;
+  stroke-width: 2px;
+  fill: none;
+}
+
+.answerLine {
+  stroke: steelblue;
+  /*stroke-width: 2px;*/
+  fill: none;
+}
+
+svg {
+  cursor: default;
+  user-select: none;
+}
+
+.afterGuess {
+  display: none;
+}
