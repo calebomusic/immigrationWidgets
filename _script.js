@@ -52,11 +52,25 @@ function drawAxes() {
               .tickFormat(d3.format('d'))
             );
 
+  svg.append("text")
+      .attr("transform",
+            "translate(" + (width - margin.right) + " ," +
+                           (height + margin.top + 10) + ")")
+      .style("font-size", "12px")
+      .text("Year");
+
   svg.append("g")
     .call(d3.axisLeft(yScale)
             .tickFormat(d3.format('.0%'))
-          )
+          );
 
+  svg.append("text")
+      .attr('x', -30)
+      .attr("y", -30)
+      .attr("dy", "1em")
+      // .style("text-anchor", "middle")
+      .style("font-size", "12px")
+      .text("Percentage foreign born");
 }
 
 function make_x_gridlines() {
