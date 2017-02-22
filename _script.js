@@ -178,9 +178,11 @@ function sgd() {
 }
 
 // drawPath(data)
+// var path = svg.selectAll('path').data([data]);
+var path = svg.append('path');
+
 
 function drawPath(data) {
-  var path = svg.selectAll('path').data([data]);
   // below draws off of svg body
   // path
   //   .enter()
@@ -190,9 +192,10 @@ function drawPath(data) {
   //   .attr('class', 'guessLine')
 
   // this doesn't erase path at all
-  svg.append('path')
-      .data([data])
-      .attr('d', guessLine)
+  // svg.append('path')
+    path
+      // .data([data])
+      .attr('d', guessLine.defined((d) => d.defined)(data))
       .attr('class', 'guessLine')
 }
 
