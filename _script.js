@@ -127,8 +127,8 @@ function dragHandler() {
       beforeAnswer = document.getElementById('beforeGuess');
 
   if(complete(defined) && defined.length === data.length) {
-    beforeAnswer.classList.remove('hidden');
-    beforeAnswer.classList.add('beforeAnswerDisplay');
+    beforeAnswer.classList.remove('beforeGuessComplete');
+    beforeAnswer.classList.add('afterGuessComplete');
 
     beforeAnswer.addEventListener('click', drawAnswerPath);
   } else {
