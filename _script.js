@@ -110,19 +110,16 @@ function dragHandler() {
     }
   })
 
-  var defined = selectDefined(guessData);
+  var defined = selectDefined(guessData),
+      beforeAnswer = document.getElementById('beforeGuess');
 
-  if(complete(defined)) {
-    var beforeAnswer = document.getElementById('beforeGuess');
-
+  if(complete(defined) && defined.length === data.length) {
     beforeAnswer.classList.remove('hidden');
     beforeAnswer.classList.add('beforeAnswerDisplay');
 
-    beforeAnswer.addEventListener('click', () => {
-      drawAnswerPath();
-    })
+    beforeAnswer.addEventListener('click', drawAnswerPath);
   } else {
-    beforeAnswer.removeEventListener('click')
+    beforeAnswer.removeEventListener('click', drawAnswerPath);
   }
 
   drawPath(defined);
@@ -130,7 +127,7 @@ function dragHandler() {
 
 function complete(data) {
   for(let d of data) {
-    if(!d['defined']) {
+    if(d['defined'] === undefined) {
       return false
     }
   }
