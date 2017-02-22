@@ -38,7 +38,6 @@ var xScale = d3.scaleLinear()
       .range([0, width])
 
 var yScale = d3.scaleLinear()
-      // .domain([0, d3.max(data, (d) => d.percentage)])
       .domain([0, 0.2])
       .range([height, 0]);
 
@@ -135,24 +134,13 @@ function complete(data) {
   return true;
 }
 
-// convert to es6 syntax when fixed
-var line = d3.line()
-  .x(function(d) {
-    // console.log(xScale(d.year));
-    return xScale(d.year); })
-  .y(function(d) {
-    // console.log(yScale(d.percentage));
-    return yScale(d.percentage); })
-
-// drawAnswerPath()
+var answerLine = d3.line()
+  .x(d => xScale(d.year))
+  .y(d => yScale(d.percentage));
 
 var guessLine = d3.line()
-  .x(function(d) {
-    // console.log(xScale(d.year));
-    return xScale(d.year); })
-  .y(function(d) {
-    // console.log(yScale(d.percentage));
-    return yScale(d.percentage); })
+  .x(d => xScale(d.year))
+  .y(d => yScale(d.percentage));
 
 
 function selectDefined(data) {
@@ -177,24 +165,11 @@ function sgd() {
   drawPath(scaledGuessData)
 }
 
-// drawPath(data)
-// var path = svg.selectAll('path').data([data]);
 var path = svg.append('path');
 
 
 function drawPath(data) {
-  // below draws off of svg body
-  // path
-  //   .enter()
-  //   .append('path')
-  // path
-  //   .attr('d', guessLine)
-  //   .attr('class', 'guessLine')
-
-  // this doesn't erase path at all
-  // svg.append('path')
     path
-      // .data([data])
       .attr('d', guessLine.defined((d) => d.defined)(data))
       .attr('class', 'guessLine')
 }
@@ -206,7 +181,7 @@ function drawAnswerPath() {
   .attr('class', 'answerLine')
   .attr('stroke-width', 0)
   .attr('width', 0)
-  .attr('d', line)
+  .attr('d', answerLine)
   .transition()
     .duration(1500)
     .attr('stroke-width', 2)
