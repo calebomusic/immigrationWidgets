@@ -11,6 +11,9 @@ Note all div classes are preceded by the graphLocationId,
     answer data:
     x key, y key
     x and y axis text, format
+
+  various colors.
+  Existing lines
 */
 
 function generateGraph(data, graphLocationId, xAxisText, yAxisText, yKey, xKey, xMin, xMax, yMin, yMax, xAxisLabelFormat, yAxisLabelFormat) {
@@ -147,8 +150,35 @@ function generateGraph(data, graphLocationId, xAxisText, yAxisText, yKey, xKey, 
       beforeAnswer.removeEventListener('click', drawAnswerPath);
     }
 
+    drawCircles('guessCirclesG', defined, '#FF4136');
     drawPath(defined);
     drawIncompleteRange(incomplete);
+  }
+
+  function handleMouseOver(d, i) {
+    var id = "t" + Math.round(d[xKey]) + "-" + Math.round(d[yKey] * 100) + "-" + i;
+
+    d3.select(this)
+      .attr('fill', '#ffc700')
+      .attr('r', radius + 1)
+
+      svg.append("text")
+        .attr( 'id', id)
+        .attr('x', () => width / 2 - 18)
+        .attr('y', () => -14)
+        .text(() => [d[xKey] + ': ' + (d[yKey] * 100).toFixed(1) + '%'] );
+  }
+
+  function handleMouseOut(color) {
+      return function(d, i) {
+        var id = "t" + Math.round(d[xKey]) + "-" + Math.round(d[yKey] * 100) + "-" + i
+
+        d3.select(this)
+          .attr('fill', color)
+          .attr('r', radius)
+
+        d3.select("#" + id).remove();
+      }
   }
 
   function complete(data) {
@@ -215,6 +245,30 @@ function generateGraph(data, graphLocationId, xAxisText, yAxisText, yKey, xKey, 
 
   var path = svg.append('path');
 
+  function drawCircles(id, data, color) {
+    svg.select('#' + id).remove();
+
+    var originalRadius = id === 'answerCirclesG' ? 0 : radius;
+
+    svg
+      .append('g')
+      .attr('id', 'guessCirclesG')
+      .selectAll('circle')
+      .data(data)
+      .enter()
+        .append('circle')
+        .attr('r', originalRadius)
+        .attr('cx', function(d) { return xScale(d[xKey]) })
+        .attr('cy', function(d) { return yScale(d[yKey]) })
+        .attr('fill', color)
+        .attr('class', 'guessCircles')
+        .on("mouseover", handleMouseOver)
+        .on("mouseout", handleMouseOut(color))
+        .transition()
+          .duration(3000)
+          .attr('r', radius)
+  }
+
   function drawPath(data) {
       path
         .attr('d', guessLine.defined((d) => d.defined)(data))
@@ -244,7 +298,9 @@ function generateGraph(data, graphLocationId, xAxisText, yAxisText, yKey, xKey, 
        .transition()
          .duration(2000)
          .attr("stroke-dashoffset", 0);
-         
+
+    drawCircles('answerCirclesG', data, 'steelblue');
+
     var answerText = document.getElementById(graphLocationId + '-answerText'),
         beforeGuess = document.getElementById(graphLocationId + '-beforeGuess');
 
