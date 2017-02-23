@@ -121,9 +121,8 @@ function dragHandler() {
       year = clamp(1850, 2010, Math.floor(xScale.invert(coord[0]) / 10) * 10);
       percentage = clamp(0, 0.20, Math.round(yScale.invert(coord[1])*100) / 100);
 
-  if(svg.select("#drawYourLine")) {
-    svg.select("#drawYourLine").remove();
-  }
+  svg.select('.hoverText').remove();
+  svg.select("#drawYourLine").remove();
 
   guessData.forEach(function(d) {
     if (Math.abs(d.year - year) === 0) {
@@ -185,7 +184,7 @@ function drawCircles(id, data, color) {
 }
 
 function handleMouseOver(d, i) {
-  var id = "t" + Math.round(d.year) + "-" + Math.round(d.percentage * 100) + "-" + i;
+  var id = "hoverT-" + Math.round(d.year) + "-" + Math.round(d.percentage * 100) + "-" + i;
 
   d3.select(this)
     .attr('fill', '#ffc700')
@@ -195,12 +194,13 @@ function handleMouseOver(d, i) {
       .attr( 'id', id)
       .attr('x', () => width / 2 - 18)
       .attr('y', () => -14)
+      .attr('class', 'hoverText')
       .text(() => [d.year + ': ' + (d.percentage * 100).toFixed(1) + '%'] );
 }
 
 function handleMouseOut(color) {
     return function(d, i) {
-      var id = "t" + Math.round(d.year) + "-" + Math.round(d.percentage * 100) + "-" + i
+      var id = "hoverT-" + Math.round(d.year) + "-" + Math.round(d.percentage * 100) + "-" + i
 
       d3.select(this)
         .attr('fill', color)

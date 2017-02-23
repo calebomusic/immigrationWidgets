@@ -123,9 +123,8 @@ function generateGraph(data, graphLocationId, xAxisText, yAxisText, yKey, xKey, 
         xVal = clamp(xMin, xMax, Math.floor(xScale.invert(coord[0]) / 10) * 10);
         yVal = clamp(yMin, yMax, Math.round(yScale.invert(coord[1])*100) / 100);
 
-    if(svg.select("#drawYourLine")) {
-      svg.select("#drawYourLine").remove();
-    }
+    svg.select('.hoverText').remove();
+    svg.select("#drawYourLine").remove();
 
     guessData.forEach(function(d) {
       if (Math.abs(d[xKey] - xVal) === 0) {
@@ -164,6 +163,7 @@ function generateGraph(data, graphLocationId, xAxisText, yAxisText, yKey, xKey, 
 
       svg.append("text")
         .attr( 'id', id)
+        .attr('class', 'hoverText')
         .attr('x', () => width / 2 - 18)
         .attr('y', () => -14)
         .text(() => [d[xKey] + ': ' + (d[yKey] * 100).toFixed(1) + '%'] );
