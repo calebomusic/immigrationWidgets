@@ -232,9 +232,12 @@ function drawAnswerPath() {
     .duration(1500)
     .attr('stroke-width', 2)
 
-  var answerText = document.getElementById('answerText')
+  var answerText = document.getElementById('answerText'),
+      beforeGuess = document.getElementById('beforeGuess');
 
-  answerText.classList.remove('hidden')
+  answerText.classList.remove('hidden');
+  beforeGuess.classList.remove('afterGuessComplete');
+  beforeGuess.classList.add('hidden');
 }
 
 function clamp(a, b, c){
