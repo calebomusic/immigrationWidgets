@@ -213,9 +213,7 @@ function drawPath(data) {
 var incompleteRange = svg.append('path');
 
 function drawIncompleteRange(incomplete) {
-  // debugger
   incompleteRange
-    // .data([incomplete])
     .attr('d', incompleteRangeLine.defined(d => d.defined)(incomplete))
     .attr('class', 'incompleteRange')
 }
