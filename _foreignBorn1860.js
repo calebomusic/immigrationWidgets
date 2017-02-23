@@ -1,7 +1,7 @@
 // https://www.brookings.edu/blog/brookings-now/2013/10/03/what-percentage-of-u-s-population-is-foreign-born/
 const width = 570,
       height = 340,
-      radius = 6,
+      radius = 5,
       numYears =  16,
       margin = {top: 15, right: 20, bottom: 50, left: 70};
 
@@ -148,10 +148,68 @@ function dragHandler() {
     beforeAnswer.removeEventListener('click', drawAnswerPath);
   }
 
+  drawCircles('guessCirclesG', defined, '#FF4136');
   drawPath(defined);
   drawIncompleteRange(incomplete);
 }
 
+var guessCircles = svg
+  .append('g')
+  .attr('id', 'guessCirclesG');
+var answerCircles = svg
+  .append('g')
+  .attr('id', 'answerCirclesG')
+
+function drawCircles(id, data, color) {
+  svg.select('#' + id).remove();
+
+  var originalRadius = id === 'answerCirclesG' ? 0 : radius;
+
+  svg
+    .append('g')
+    .attr('id', 'guessCirclesG')
+    .selectAll('circle')
+    .data(data)
+    .enter()
+      .append('circle')
+      .attr('r', originalRadius)
+      .attr('cx', function(d) { return xScale(d.year) })
+      .attr('cy', function(d) { return yScale(d.percentage) })
+      .attr('fill', color)
+      .attr('class', 'guessCircles')
+      .on("mouseover", handleMouseOver)
+      .on("mouseout", handleMouseOut(color))
+      .transition()
+        .duration(3000)
+        .attr('r', radius)
+}
+
+function handleMouseOver(d, i) {
+  var id = "t" + Math.round(d.year) + "-" + Math.round(d.percentage * 100) + "-" + i;
+
+  d3.select(this)
+    .attr('fill', '#ffc700')
+    .attr('r', radius + 1)
+
+    svg.append("text")
+      .attr( 'id', id)
+      .attr('x', () => width / 2 - 18)
+      .attr('y', () => -14)
+      .text(() => [d.year + ': ' + (d.percentage * 100).toFixed(1) + '%'] );
+}
+
+function handleMouseOut(color) {
+    return function(d, i) {
+      var id = "t" + Math.round(d.year) + "-" + Math.round(d.percentage * 100) + "-" + i
+
+      d3.select(this)
+        .attr('fill', color)
+        .attr('r', radius)
+
+      d3.select("#" + id).remove();
+    }
+}
+// Check whether the drawn line is complete
 function complete(data) {
   for(let d of data) {
     if(d['defined'] === undefined) {
@@ -203,16 +261,16 @@ function selectIncomplete(guessData) {
   }
 }
 
-var scaledGuessData = guessData.map( (d) => {
-  return {
-    year: xScale(d.year),
-    percentage: yScale(d.year)
-  }
-})
+// var scaledGuessData = guessData.map( (d) => {
+//   return {
+//     year: xScale(d.year),
+//     percentage: yScale(d.year)
+//   }
+// })
 
-function sgd() {
-  drawPath(scaledGuessData)
-}
+// function sgd() {
+//   drawPath(scaledGuessData)
+// }
 
 var path = svg.append('path');
 
@@ -245,6 +303,8 @@ function drawAnswerPath() {
      .transition()
        .duration(2000)
        .attr("stroke-dashoffset", 0)
+
+  drawCircles('answerCirclesG', data, 'steelblue')
 
   var answerText = document.getElementById('answerText'),
       beforeGuess = document.getElementById('beforeGuess');
