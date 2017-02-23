@@ -209,6 +209,7 @@ function handleMouseOut(color) {
       d3.select("#" + id).remove();
     }
 }
+
 // Check whether the drawn line is complete
 function complete(data) {
   for(let d of data) {
@@ -261,17 +262,6 @@ function selectIncomplete(guessData) {
   }
 }
 
-// var scaledGuessData = guessData.map( (d) => {
-//   return {
-//     year: xScale(d.year),
-//     percentage: yScale(d.year)
-//   }
-// })
-
-// function sgd() {
-//   drawPath(scaledGuessData)
-// }
-
 var path = svg.append('path');
 
 function drawPath(data) {
@@ -304,7 +294,7 @@ function drawAnswerPath() {
        .duration(2000)
        .attr("stroke-dashoffset", 0)
 
-  drawCircles('answerCirclesG', data, 'steelblue')
+  drawCircles('answerCirclesG', data, 'steelblue');
 
   var answerText = document.getElementById('answerText'),
       beforeGuess = document.getElementById('beforeGuess');
