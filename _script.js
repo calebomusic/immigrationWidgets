@@ -68,7 +68,6 @@ function drawAxes() {
       .attr('x', -30)
       .attr("y", -30)
       .attr("dy", "1em")
-      // .style("text-anchor", "middle")
       .style("font-size", "12px")
       .text("Percentage foreign born");
 }
