@@ -231,16 +231,20 @@ function drawIncompleteRange(incomplete) {
 }
 
 function drawAnswerPath() {
-  svg
+  var path = svg
   .append('path')
   .data([data])
   .attr('class', 'answerLine')
-  .attr('stroke-width', 0)
-  .attr('width', 0)
+  .attr('stroke-width', 2)
   .attr('d', answerLine)
-  .transition()
-    .duration(1500)
-    .attr('stroke-width', 2)
+
+  var length = path.node().getTotalLength()
+
+  path.attr("stroke-dasharray", length + " " + length)
+     .attr("stroke-dashoffset", length)
+     .transition()
+       .duration(2000)
+       .attr("stroke-dashoffset", 0)
 
   var answerText = document.getElementById('answerText'),
       beforeGuess = document.getElementById('beforeGuess');
