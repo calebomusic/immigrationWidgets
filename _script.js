@@ -124,6 +124,7 @@ function dragHandler() {
   })
 
   var defined = selectDefined(guessData),
+      incomplete = selectIncomplete(defined),
       beforeAnswer = document.getElementById('beforeGuess');
 
   if(complete(defined) && defined.length === data.length) {
@@ -136,6 +137,7 @@ function dragHandler() {
   }
 
   drawPath(defined);
+  drawIncompleteRange(incomplete);
 }
 
 function complete(data) {
@@ -148,6 +150,7 @@ function complete(data) {
   return true;
 }
 
+// Three lines for three paths
 var answerLine = d3.line()
   .x(d => xScale(d.year))
   .y(d => yScale(d.percentage));
@@ -156,7 +159,11 @@ var guessLine = d3.line()
   .x(d => xScale(d.year))
   .y(d => yScale(d.percentage));
 
+var incompleteRangeLine = d3.line()
+  .x(d => xScale(d.year))
+  .y(d => yScale(d.percentage));
 
+// Select defined data
 function selectDefined(data) {
   var defined = [];
 
@@ -168,6 +175,22 @@ function selectDefined(data) {
 
   return defined;
 }
+
+// Select points for incomplete data range
+function selectIncomplete(guessData) {
+  if(data.length === guessData.length) {
+    return [];
+  } else {
+    var firstIncompleteYear = data[guessData.length - 1].year;
+    return [
+      { year: firstIncompleteYear, percentage: 0.0, defined: true},
+      { year: firstIncompleteYear, percentage: 0.20, defined: true},
+      { year: 2010, percentage: 0.20, defined: true},
+      { year: 2010, percentage: 0.0, defined: true}
+    ]
+  }
+}
+
 var scaledGuessData = guessData.map( (d) => {
   return {
     year: xScale(d.year),
@@ -181,11 +204,20 @@ function sgd() {
 
 var path = svg.append('path');
 
-
 function drawPath(data) {
     path
       .attr('d', guessLine.defined((d) => d.defined)(data))
       .attr('class', 'guessLine')
+}
+
+var incompleteRange = svg.append('path');
+
+function drawIncompleteRange(incomplete) {
+  // debugger
+  incompleteRange
+    // .data([incomplete])
+    .attr('d', incompleteRangeLine.defined(d => d.defined)(incomplete))
+    .attr('class', 'incompleteRange')
 }
 
 function drawAnswerPath() {

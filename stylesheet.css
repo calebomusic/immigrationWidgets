@@ -1,11 +1,42 @@
 body {
   font-family: 'Domine', serif;
+  user-select: none;
 }
 
 .grid line {
   stroke: #ccc;
   stroke-dasharray: 1 4;
   stroke-linecap: round;
+}
+
+.incompleteRange {
+  fill: #f2e277;
+  fill-opacity: 0.05;
+  -webkit-animation: incompleteRangeAni 1.5s 0s infinite;
+  -moz-animation: incompleteRangeAni 1.5s 0s infinite;
+  -o-animation: incompleteRangeAni 1.5s 0s infinite;
+  animation: incompleteRangeAni 1.5s 0s infinite;
+}
+
+
+@-webkit-keyframes incompleteRangeAni {
+  50%   { opacity: 0.3; }
+  100% { opacity: .05; }
+}
+
+@-moz-keyframes incompleteRangeAni {
+  50%   { opacity: 0.3; }
+  100% { opacity: .05; }
+}
+
+@-o-keyframes incompleteRangeAni {
+  50%   { opacity: 0.3; }
+  100% { opacity: .05; }
+}
+
+@keyframes incompleteRangeAni {
+  50%   { opacity: 0.3; }
+  100% { opacity: .05; }
 }
 
 .axisX {
