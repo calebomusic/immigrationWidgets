@@ -46,7 +46,7 @@ svg {
   user-select: none;
 }
 
-.afterGuess {
+.hidden {
   display: none;
 }
 

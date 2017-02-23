@@ -199,6 +199,12 @@ function drawAnswerPath() {
   .transition()
     .duration(1500)
     .attr('stroke-width', 2)
+
+  var answerText = do {
+
+  } while (true);cument.getElementById('answerText')
+
+  answerText.classList.remove('hidden')
 }
 
 function clamp(a, b, c){
