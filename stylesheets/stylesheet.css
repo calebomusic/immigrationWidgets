@@ -3,6 +3,10 @@ body {
   user-select: none;
 }
 
+a {
+  color: inherit;
+}
+
 .grid line {
   stroke: #ccc;
   stroke-dasharray: 1 4;
