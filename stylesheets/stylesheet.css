@@ -84,7 +84,7 @@ svg {
   display: none;
 }
 
-.afterGuessComplete {
+.foreignBorn-afterGuessComplete {
   display: block;
   height: 25px;
   background-color: steelblue;
@@ -99,7 +99,7 @@ svg {
   border-radius: 8px;
 }
 
-.beforeGuessComplete {
+.foreignBorn-beforeGuessComplete {
   display: block;
   height: 25px;
   background-color: steelblue;
