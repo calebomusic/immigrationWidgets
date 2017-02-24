@@ -18,7 +18,6 @@ body {
   animation: incompleteRangeAni 1.5s 0s infinite;
 }
 
-
 @-webkit-keyframes incompleteRangeAni {
   0%  { opacity: .05; }
   50%   { opacity: 0.3; }
