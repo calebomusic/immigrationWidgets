@@ -75,7 +75,12 @@ a {
 
 .answerLine {
   stroke: steelblue;
-  /*stroke-width: 2px;*/
+  fill: none;
+}
+
+.otherLine1 {
+  stroke: #05E177;
+  stroke-width: 2px;
   fill: none;
 }
 
