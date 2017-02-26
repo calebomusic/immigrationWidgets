@@ -63,6 +63,15 @@ a {
   border-color: #FF4136;
 }
 
+[id^=answerText] {
+  margin-bottom: 10px;
+}
+
+[id^=before-] {
+  padding-top: 10px;
+  margin-bottom: 10px;
+}
+
 .hidden {
   display: none;
 }
