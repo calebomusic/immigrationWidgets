@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -75,7 +75,7 @@
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _lodash = __webpack_require__(3);
+var _lodash = __webpack_require__(2);
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -552,57 +552,6 @@ module.exports = generateNumGuessWidget;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var generateGraph = __webpack_require__(0);
-var generateNumGuessWidget = __webpack_require__(1);
-
-document.addEventListener('DOMContentLoaded', function () {
-  var foreignBornData = [{ year: 1860, percentage: 0.132 }, { year: 1870, percentage: 0.144 }, { year: 1880, percentage: 0.133 }, { year: 1890, percentage: 0.148 }, { year: 1900, percentage: 0.136 }, { year: 1910, percentage: 0.147 }, { year: 1920, percentage: 0.132 }, { year: 1930, percentage: 0.116 }, { year: 1940, percentage: 0.088 }, { year: 1950, percentage: 0.069 }, { year: 1960, percentage: 0.054 }, { year: 1970, percentage: 0.047 }, { year: 1980, percentage: 0.062 }, { year: 1990, percentage: 0.079 }, { year: 2000, percentage: 0.111 }, { year: 2010, percentage: 0.129 }];
-
-  var foreignBornOptions = {
-    xAxisText: 'Year',
-    yAxisText: 'Percentage foreign born',
-    yMin: 0,
-    yMax: 0.2,
-    xMin: 1860,
-    xMax: 2010,
-    xAxisLabelFormat: 'd',
-    yAxisLabelFormat: '.0%'
-  };
-
-  generateGraph(foreignBornData, 'foreignBorn', 'year', 'percentage', foreignBornOptions);
-
-  // generateNumGuessWidget("foreignBornToday", '%');
-  // generateNumGuessWidget("foreignBornTodayLegal", '%');
-
-  var mexicanImmigrationData = [{ year: 1990, population: 2.0 }, { year: 1995, population: 2.9 }, { year: 2000, population: 4.5 }, { year: 2007, population: 6.9 }, { year: 2009, population: 6.4 }, { year: 2014, population: 5.8 }];
-
-  var otherImmigrationData = [{ year: 1990, population: 1.5 }, { year: 1995, population: 2.8 }, { year: 2000, population: 4.1 }, { year: 2007, population: 5.3 }, { year: 2009, population: 5.0 }, { year: 2014, population: 5.3 }];
-
-  var mexicoAndOtherOptions = {
-    xAxisText: 'Year',
-    yAxisText: 'Population in millions',
-    yMin: 0,
-    yMax: 10,
-    xMin: 1990,
-    xMax: 2014,
-    xAxisLabelFormat: 'd',
-    yAxisLabelFormat: '',
-    xTicks: 6,
-    yTicks: 5,
-    guessDist: 2,
-    otherData: [mexicanImmigrationData]
-  };
-
-  generateGraph(otherImmigrationData, 'mexicoAndOther', 'year', 'population', mexicoAndOtherOptions);
-});
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -17691,10 +17640,10 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(5)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4)(module)))
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports) {
 
 var g;
@@ -17721,7 +17670,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -17747,6 +17696,57 @@ module.exports = function(module) {
 	return module;
 };
 
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var generateGraph = __webpack_require__(0);
+var generateNumGuessWidget = __webpack_require__(1);
+
+document.addEventListener('DOMContentLoaded', function () {
+  var foreignBornData = [{ year: 1860, percentage: 0.132 }, { year: 1870, percentage: 0.144 }, { year: 1880, percentage: 0.133 }, { year: 1890, percentage: 0.148 }, { year: 1900, percentage: 0.136 }, { year: 1910, percentage: 0.147 }, { year: 1920, percentage: 0.132 }, { year: 1930, percentage: 0.116 }, { year: 1940, percentage: 0.088 }, { year: 1950, percentage: 0.069 }, { year: 1960, percentage: 0.054 }, { year: 1970, percentage: 0.047 }, { year: 1980, percentage: 0.062 }, { year: 1990, percentage: 0.079 }, { year: 2000, percentage: 0.111 }, { year: 2010, percentage: 0.129 }];
+
+  var foreignBornOptions = {
+    xAxisText: 'Year',
+    yAxisText: 'Percentage foreign born',
+    yMin: 0,
+    yMax: 0.2,
+    xMin: 1860,
+    xMax: 2010,
+    xAxisLabelFormat: 'd',
+    yAxisLabelFormat: '.0%'
+  };
+
+  generateGraph(foreignBornData, 'foreignBorn', 'year', 'percentage', foreignBornOptions);
+
+  // generateNumGuessWidget("foreignBornToday", '%');
+  // generateNumGuessWidget("foreignBornTodayLegal", '%');
+
+  var mexicanImmigrationData = [{ year: 1990, population: 2.0 }, { year: 1995, population: 2.9 }, { year: 2000, population: 4.5 }, { year: 2007, population: 6.9 }, { year: 2009, population: 6.4 }, { year: 2014, population: 5.8 }];
+
+  var otherImmigrationData = [{ year: 1990, population: 1.5 }, { year: 1995, population: 2.8 }, { year: 2000, population: 4.1 }, { year: 2007, population: 5.3 }, { year: 2009, population: 5.0 }, { year: 2014, population: 5.3 }];
+
+  var mexicoAndOtherOptions = {
+    xAxisText: 'Year',
+    yAxisText: 'Population in millions',
+    yMin: 0,
+    yMax: 10,
+    xMin: 1990,
+    xMax: 2014,
+    xAxisLabelFormat: 'd',
+    yAxisLabelFormat: '',
+    xTicks: 6,
+    yTicks: 5,
+    guessDist: 2,
+    otherData: [mexicanImmigrationData]
+  };
+
+  generateGraph(otherImmigrationData, 'mexicoAndOther', 'year', 'population', mexicoAndOtherOptions);
+});
 
 /***/ })
 /******/ ]);
