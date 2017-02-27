@@ -576,8 +576,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   generateGraph(foreignBornData, 'foreignBorn', 'year', 'percentage', foreignBornOptions);
 
-  generateNumGuessWidget("foreignBornToday", '%');
-  generateNumGuessWidget("foreignBornTodayLegal", '%');
+  // generateNumGuessWidget("foreignBornToday", '%');
+  // generateNumGuessWidget("foreignBornTodayLegal", '%');
 
   var mexicanImmigrationData = [{ year: 1990, population: 2.0 }, { year: 1995, population: 2.9 }, { year: 2000, population: 4.5 }, { year: 2007, population: 6.9 }, { year: 2009, population: 6.4 }, { year: 2014, population: 5.8 }];
 
