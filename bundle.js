@@ -128,7 +128,8 @@ function generateGraph(data, graphLocationId, xKey, yKey, options) {
       yMin = _Object$keys$sort$map2[14],
       yTicks = _Object$keys$sort$map2[15];
 
-  var svg = d3.select('#' + graphLocationId).append('svg:svg').attr('id', 'svg-' + graphLocationId).attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom).append("g").attr("transform", "translate(37,40)").attr('style', "-webkit-tap-highlight-color: rgba(0, 0, 0, 0);");
+  var svg = d3.select('#' + graphLocationId).append('svg:svg').attr('id', 'svg-' + graphLocationId).attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom).attr('offset', 100).append("g").attr("transform", "translate(37,40)");
+  // .attr('style', "-webkit-tap-highlight-color: rgba(0, 0, 0, 0);");
 
   var xScale = d3.scaleLinear().domain(d3.extent(data, function (d) {
     return d[xKey];
@@ -187,6 +188,8 @@ function generateGraph(data, graphLocationId, xKey, yKey, options) {
     });
   }
 
+  var guessXDist = (guessData[1][xKey] - guessData[0][xKey]) / 2;
+
   var body = d3.select('#svg-' + graphLocationId);
   var drag = d3.drag().on("drag", dragHandler);
   body.call(drag);
@@ -196,14 +199,15 @@ function generateGraph(data, graphLocationId, xKey, yKey, options) {
 
   function dragHandler() {
     var coord = d3.mouse(this),
-        xVal = clamp(xMin, xMax, Math.floor(xScale.invert(coord[0]))),
-        yVal = clamp(yMin, yMax, Math.round(yScale.invert(coord[1]) * 100) / 100);
+
+    // Note adjustments nec due to transform translate(37, 40)
+    xVal = clamp(xMin, xMax, xScale.invert(coord[0] - 37)),
+        yVal = clamp(yMin, yMax, yScale.invert(coord[1] - 40));
 
     svg.select('.hoverText').remove();
     svg.select("#drawYourLine").remove();
-
     guessData.forEach(function (d) {
-      if (Math.abs(d[xKey] - xVal) === 0) {
+      if (Math.abs(d[xKey] - xVal) < guessXDist) {
         d[yKey] = yVal;
         d.defined = true;
       } else if (d[xKey] < xVal && !d.defined) {
