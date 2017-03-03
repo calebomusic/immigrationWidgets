@@ -13,7 +13,7 @@ a {
   stroke-linecap: round;
 }
 
-.incompleteRange {
+[class^=incompleteRange] {
   fill: rgb(255, 199, 0);
   opacity: 0;
   -webkit-animation: incompleteRangeAni 1.5s 0s infinite;
