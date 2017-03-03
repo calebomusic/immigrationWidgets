@@ -235,8 +235,6 @@ function generateGraph(data, graphLocationId, xKey, yKey, options) {
       beforeAnswer.classList.add('afterGuessComplete-' + graphLocationId);
 
       beforeAnswer.addEventListener('click', drawAnswerPath);
-      drag = d3.drag().on("drag", null);
-      body.call(drag);
     } else {
       beforeAnswer.removeEventListener('click', drawAnswerPath);
     }
@@ -461,6 +459,8 @@ function generateGraph(data, graphLocationId, xKey, yKey, options) {
     answerText.classList.remove('hidden');
     beforeGuess.classList.remove('afterGuessComplete-' + graphLocationId);
     beforeGuess.classList.add('beforeGuessComplete-' + graphLocationId);
+    drag = d3.drag().on("drag", null);
+    body.call(drag);
   }
 
   function clamp(a, b, c) {
