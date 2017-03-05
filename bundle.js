@@ -79,19 +79,21 @@ var _lodash = __webpack_require__(2);
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function generateGraph(data, graphLocationId, xKey, yKey, options) {
+function generateGraph(graphId, options) {
   var defaults = {
     xAxisText: '',
     yAxisText: '',
+    xKey: 'X',
+    yKey: 'Y',
     xTicks: 8,
     yTicks: 8,
     xMin: 0,
-    xMax: Math.max.apply(data.map(function (d) {
-      return d[xKey];
+    xMax: Math.max.apply(options['data'].map(function (d) {
+      return d[options['xKey']];
     })),
     yMin: 0,
-    yMax: Math.max.apply(data.map(function (d) {
-      return d[yKey];
+    yMax: Math.max.apply(options['data'].map(function (d) {
+      return d[options['yKey']];
     })),
     xAxisLabelFormat: '',
     yAxisLabelFormat: '',
@@ -100,6 +102,7 @@ function generateGraph(data, graphLocationId, xKey, yKey, options) {
     width: 570,
     height: 340,
     guessDist: false,
+    data: [],
     otherData: []
   };
 
@@ -110,25 +113,28 @@ function generateGraph(data, graphLocationId, xKey, yKey, options) {
   var _Object$keys$sort$map = Object.keys(options).sort().map(function (k) {
     return options[k];
   }),
-      _Object$keys$sort$map2 = _slicedToArray(_Object$keys$sort$map, 16),
-      guessDist = _Object$keys$sort$map2[0],
-      height = _Object$keys$sort$map2[1],
-      margin = _Object$keys$sort$map2[2],
-      otherData = _Object$keys$sort$map2[3],
-      radius = _Object$keys$sort$map2[4],
-      width = _Object$keys$sort$map2[5],
-      xAxisLabelFormat = _Object$keys$sort$map2[6],
-      xAxisText = _Object$keys$sort$map2[7],
-      xMax = _Object$keys$sort$map2[8],
-      xMin = _Object$keys$sort$map2[9],
-      xTicks = _Object$keys$sort$map2[10],
-      yAxisLabelFormat = _Object$keys$sort$map2[11],
-      yAxisText = _Object$keys$sort$map2[12],
-      yMax = _Object$keys$sort$map2[13],
-      yMin = _Object$keys$sort$map2[14],
-      yTicks = _Object$keys$sort$map2[15];
+      _Object$keys$sort$map2 = _slicedToArray(_Object$keys$sort$map, 19),
+      data = _Object$keys$sort$map2[0],
+      guessDist = _Object$keys$sort$map2[1],
+      height = _Object$keys$sort$map2[2],
+      margin = _Object$keys$sort$map2[3],
+      otherData = _Object$keys$sort$map2[4],
+      radius = _Object$keys$sort$map2[5],
+      width = _Object$keys$sort$map2[6],
+      xAxisLabelFormat = _Object$keys$sort$map2[7],
+      xAxisText = _Object$keys$sort$map2[8],
+      xKey = _Object$keys$sort$map2[9],
+      xMax = _Object$keys$sort$map2[10],
+      xMin = _Object$keys$sort$map2[11],
+      xTicks = _Object$keys$sort$map2[12],
+      yAxisLabelFormat = _Object$keys$sort$map2[13],
+      yAxisText = _Object$keys$sort$map2[14],
+      yKey = _Object$keys$sort$map2[15],
+      yMax = _Object$keys$sort$map2[16],
+      yMin = _Object$keys$sort$map2[17],
+      yTicks = _Object$keys$sort$map2[18];
 
-  var svg = d3.select('#' + graphLocationId).append('svg:svg').attr('id', 'svg-' + graphLocationId).attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom).attr('offset', 100).append("g").attr("transform", "translate(37,40)");
+  var svg = d3.select('#' + graphId).append('svg:svg').attr('id', 'svg-' + graphId).attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom).attr('offset', 100).append("g").attr("transform", "translate(37,40)");
   // .attr('style', "-webkit-tap-highlight-color: rgba(0, 0, 0, 0);");
 
   var xScale = d3.scaleLinear().domain(d3.extent(data, function (d) {
@@ -190,7 +196,7 @@ function generateGraph(data, graphLocationId, xKey, yKey, options) {
 
   var guessXDist = (guessData[1][xKey] - guessData[0][xKey]) / 2;
 
-  var body = d3.select('#svg-' + graphLocationId);
+  var body = d3.select('#svg-' + graphId);
   var drag = d3.drag().on("drag", dragHandler);
   body.call(drag);
 
@@ -228,11 +234,11 @@ function generateGraph(data, graphLocationId, xKey, yKey, options) {
       return d.defined;
     }),
         incomplete = selectIncomplete(defined),
-        beforeAnswer = document.getElementById('beforeGuess-' + graphLocationId);
+        beforeAnswer = document.getElementById('beforeGuess-' + graphId);
 
     if (complete(defined) && defined.length === guessData.length) {
-      beforeAnswer.classList.remove('beforeGuessComplete-' + graphLocationId);
-      beforeAnswer.classList.add('afterGuessComplete-' + graphLocationId);
+      beforeAnswer.classList.remove('beforeGuessComplete-' + graphId);
+      beforeAnswer.classList.add('afterGuessComplete-' + graphId);
 
       beforeAnswer.addEventListener('click', drawAnswerPath);
     } else {
@@ -425,7 +431,7 @@ function generateGraph(data, graphLocationId, xKey, yKey, options) {
 
   function drawIncompleteRange(incomplete) {
     if (incomplete.length === 0) {
-      d3.select('.incompleteRange' + graphLocationId).remove();
+      d3.select('.incompleteRange' + graphId).remove();
     }
 
     for (var _i = 0; _i < incomplete.length; _i++) {
@@ -433,7 +439,7 @@ function generateGraph(data, graphLocationId, xKey, yKey, options) {
           incompleteRangeSide = incomplete[_i];
       incompleteRanges[_i].attr('d', line.defined(function (d) {
         return d.defined;
-      })(incompleteRangeSide)).attr('class', 'incompleteRange' + graphLocationId);
+      })(incompleteRangeSide)).attr('class', 'incompleteRange' + graphId);
     }
   }
 
@@ -449,16 +455,16 @@ function generateGraph(data, graphLocationId, xKey, yKey, options) {
   }
 
   function drawAnswerPath() {
-    var answerText = document.getElementById('answerText-' + graphLocationId),
-        beforeGuess = document.getElementById('beforeGuess-' + graphLocationId);
+    var answerText = document.getElementById('answerText-' + graphId),
+        beforeGuess = document.getElementById('beforeGuess-' + graphId);
 
     drawOtherPath(data, answerLine, 'steelblue', 'answer');
     window.setTimeout(function () {
       return lastValueText('answer', data[data.length - 1], '#4682b4');
     }, 2000);
     answerText.classList.remove('hidden');
-    beforeGuess.classList.remove('afterGuessComplete-' + graphLocationId);
-    beforeGuess.classList.add('beforeGuessComplete-' + graphLocationId);
+    beforeGuess.classList.remove('afterGuessComplete-' + graphId);
+    beforeGuess.classList.add('beforeGuessComplete-' + graphId);
     drag = d3.drag().on("drag", null);
     body.call(drag);
   }
@@ -17762,10 +17768,13 @@ document.addEventListener('DOMContentLoaded', function () {
     xMin: 1860,
     xMax: 2010,
     xAxisLabelFormat: 'd',
-    yAxisLabelFormat: '.0%'
+    yAxisLabelFormat: '.0%',
+    data: foreignBornData,
+    xKey: 'year',
+    yKey: 'percentage'
   };
 
-  generateGraph(foreignBornData, 'foreignBorn', 'year', 'percentage', foreignBornOptions);
+  generateGraph('foreignBorn', foreignBornOptions);
 
   // generateNumGuessWidget("foreignBornToday", '%');
   // generateNumGuessWidget("foreignBornTodayLegal", '%');
@@ -17779,6 +17788,8 @@ document.addEventListener('DOMContentLoaded', function () {
     yAxisText: 'Population in millions',
     yMin: 0,
     yMax: 10,
+    xKey: 'year',
+    yKey: 'population',
     xMin: 1990,
     xMax: 2014,
     xAxisLabelFormat: 'd',
@@ -17786,10 +17797,11 @@ document.addEventListener('DOMContentLoaded', function () {
     xTicks: 6,
     yTicks: 5,
     guessDist: 2,
+    data: otherImmigrationData,
     otherData: [mexicanImmigrationData]
   };
 
-  generateGraph(otherImmigrationData, 'mexicoAndOther', 'year', 'population', mexicoAndOtherOptions);
+  generateGraph('mexicoAndOther', mexicoAndOtherOptions);
 });
 
 /***/ })
